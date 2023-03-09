@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+<insertfile>_inc/summary.txt</insertfile>
+-->
+
+<modification>
+    <name>#ocmod.space: <insertvar>MODCODE</insertvar></name>
+    <code><insertvar>MODFILE</insertvar></code>
+    <version><insertvar>MODVERS</insertvar></version>
+    <author><insertvar>AUTHOR</insertvar></author>
+    <link><insertvar>XMLLINK</insertvar></link>
+
+    <file path="">
+        <operation error="log" info="3.x">
+            <search info=""><![CDATA[   ]]></search>
+            <add position="replace"><![CDATA[   ]]></add>
+        </operation>
+    </file>
+
+</modification>

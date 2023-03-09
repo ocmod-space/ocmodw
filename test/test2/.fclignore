@@ -1,0 +1,9 @@
+.git
+.github
+_fcl
+_pak
+zip
+.fclignore
+.gitignore
+hideg.pwd
+pakrun.php
