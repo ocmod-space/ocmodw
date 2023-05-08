@@ -8,16 +8,16 @@ The constants defined in the `pakdef.php` file are used for replacement. All it 
 
 Example of directory structure (for example it will be `oc-module`) :
 
-_fcl
+- _fcl
   - oc-module.fcl.g
-_inc
+- _inc
   - include0.txt
   - include1.txt
-module
+- module
   - src
   - zip
     - oc-module.ocmod.zip
-addons
+- addons
   - addon1
     - src
     - zip
@@ -27,8 +27,8 @@ addons
     - zip
       - oc-module--addon1.ocmod.zip
   - ...
-.fclignore
-pakdef.php
+- .fclignore
+- pakdef.php
 
 `_fcl`- Can be ignored now. `fcl`-file is a custom archive that contains all the necessary project files and has a git-friendly structure. It is encrypted by a custom utility for security. Requires two custom utilities that are not yet publicly available (I will post the source files of these utilities later).  
 `_inc` - A directory to store placeholder files are used with the `<insertfile>` tag.  
