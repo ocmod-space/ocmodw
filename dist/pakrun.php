@@ -21,14 +21,14 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
 
 $clo = get_clo();
 $basename = strtolower(basename(getcwd()));
-if (isset($clo[MAKEZIP]) && !is_false($clo[MAKEZIP])) {
+if (isset($clo[MAKEZIP]) && $clo[MAKEZIP] !== false) {
     require_once 'pakdef.php';
 
-    $workdir = get_wd($clo[MAKEZIP]);
+    $workdir = getWd($clo[MAKEZIP]);
 
     if ($workdir) {
-        $srcdir = concatpath($workdir, SRCDIR);
-        $zipdir = concatpath($workdir, ZIPDIR);
+        $srcdir = getConcatPath($workdir, SRCDIR);
+        $zipdir = getConcatPath($workdir, ZIPDIR);
 
         if (strpos($workdir, ADIR) === 0) {
             $part = explode(DIRECTORY_SEPARATOR, $workdir);
@@ -39,7 +39,7 @@ if (isset($clo[MAKEZIP]) && !is_false($clo[MAKEZIP])) {
 
         define('MODFILE', $basename);
 
-        $zipfile = concatpath($zipdir, $basename.ZIPEXT);
+        $zipfile = getConcatPath($zipdir, $basename.ZIPEXT);
 
         $mod_code = str_replace('--', '|', $basename);
 
@@ -66,24 +66,24 @@ if (isset($clo[MAKEZIP]) && !is_false($clo[MAKEZIP])) {
         output('There is no directory corresponding to number '.$clo[MAKEZIP], true);
     }
 } elseif (isset($clo[MAKEFCL]) || isset($clo[EXTRFCL]) || isset($clo[LISTFCL])) {
-    $fclfile = concatpath(FCLDIR, $basename.'.fcl');
+    $fclfile = getConcatPath(FCLDIR, $basename.'.fcl');
 
     if (isset($clo[MAKEFCL])) {
         chkdir(FCLDIR);
 
-        output(runfcl('make', $fclfile, '-f'.get_fclignore(FCLIGNORE)));
-        output(runhideg($fclfile));
+        output(fcl('make', $fclfile, '-f'.fclignore(FCLIGNORE)));
+        output(hideg($fclfile));
     } elseif (isset($clo[EXTRFCL]) || isset($clo[LISTFCL])) {
         if (is_file($fclfile.'.g')) {
-            output(runhideg($fclfile.'.g'));
+            output(hideg($fclfile.'.g'));
 
             if (is_file($fclfile)) {
                 if (isset($clo[EXTRFCL])) {
-                    output(runfcl('extr', $fclfile, '-f'));
+                    output(fcl('extr', $fclfile, '-f'));
                 }
 
                 if (isset($clo[LISTFCL])) {
-                    output(runfcl('list', $fclfile));
+                    output(fcl('list', $fclfile));
                 }
             } else {
                 output('file "'.$fclfile.'" is missing!', true);
@@ -101,7 +101,7 @@ if (isset($clo[MAKEZIP]) && !is_false($clo[MAKEZIP])) {
 
     output('Numbers:');
 
-    foreach (get_enumerated() as $idx => $name) {
+    foreach (numbered() as $idx => $name) {
         output('['.$idx.'] - '.$name);
     }
 }

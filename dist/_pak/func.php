@@ -31,39 +31,31 @@ function get_clo() {
 }
 
 // returns path with a directory separator on the right or without
-function concatpath(string $parent, string $child) {
+function getConcatPath(string $parent, string $child) {
     return trim($parent, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.trim($child, DIRECTORY_SEPARATOR);
 }
 
-function get_wd($num) {
+function getWd($num) {
     if ($num === 0 && is_dir(MDIR)) {
         return MDIR;
     }
 
-    $addons = get_dir_list(ADIR);
+    $addons = getDirList(ADIR);
 
     if ($addons && isset($addons[$num - 1])) {
-        return concatpath(ADIR, $addons[$num - 1]);
+        return getConcatPath(ADIR, $addons[$num - 1]);
     }
 
     return false;
 }
 
-function output(string $text = '', bool $error = false) {
-    $text = ($error) ? 'ERROR: '.$text : $text;
-
-    echo $text."\n";
-
-    ($error) ? exit(1) : null;
-}
-
-function get_dir_list(string $path) {
+function getDirList(string $path) {
     $list = [];
 
     if (is_dir($path)) {
         foreach (scandir($path) as $dir) {
-            if ($dir != '.' && $dir != '..' && is_dir(concatpath($path, $dir))) {
-                // $list[] = concatpath($path, $dir);
+            if ($dir != '.' && $dir != '..' && is_dir(getConcatPath($path, $dir))) {
+                // $list[] = getConcatPath($path, $dir);
                 $list[] = $dir;
             }
         }
@@ -72,12 +64,25 @@ function get_dir_list(string $path) {
     return $list;
 }
 
-function is_false($x) {
-    if ($x === false) {
-        return true;
+function getFileList($path) {
+    $files = [];
+
+    if (is_dir($path)) {
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::SELF_FIRST
+        );
+
+        foreach ($iterator as $file) {
+            if ($file->isDir()) {
+                // continue;
+            }
+
+            $files[] = $file->getPathname();
+        }
     }
 
-    return false;
+    return $files;
 }
 
 function chkdir(string $dir) {
@@ -96,11 +101,8 @@ function mkzip($srcdir, $zipfile, $force = false) {
     $zip = new ZipArchive();
 
     if ($zip->open($zipfile, ZipArchive::CREATE) === true) {
-        foreach (get_file_list($srcdir) as $file) {
-            $part = explode(DIRECTORY_SEPARATOR, $file);
-            $relative = end($part);
-
-            unset($part);
+        foreach (getFileList($srcdir) as $file) {
+            $relative = substr($file, strlen($srcdir));
 
             if (is_file($file)) {
                 $content = replacer($file);
@@ -136,27 +138,6 @@ function mkzip($srcdir, $zipfile, $force = false) {
     }
 }
 
-function get_file_list($path) {
-    $files = [];
-
-    if (is_dir($path)) {
-        $iterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS),
-            RecursiveIteratorIterator::SELF_FIRST
-        );
-
-        foreach ($iterator as $file) {
-            if ($file->isDir()) {
-                // continue;
-            }
-
-            $files[] = $file->getPathname();
-        }
-    }
-
-    return $files;
-}
-
 function replacer($file, $to_replace = []) {
     if (!$to_replace) {
         $to_replace = get_defined_constants(true)['user'];
@@ -169,7 +150,7 @@ function replacer($file, $to_replace = []) {
             $line = fgets($pointer);
 
             if (strpos($line, '<insertfile>') !== false) {
-                $ifile = get_substr_between($line, '<insertfile>', '</insertfile>');
+                $ifile = getSubstrBetween($line, '<insertfile>', '</insertfile>');
 
                 if (empty($ifile) || !is_file($ifile)) {
                     output('in "'.$file.'". Check placeholder file "'.$ifile.'"', true);
@@ -180,7 +161,7 @@ function replacer($file, $to_replace = []) {
             }
 
             while (strpos($line, '<insertvar>') !== false) {
-                $ivar = get_substr_between($line, '<insertvar>', '</insertvar>');
+                $ivar = getSubstrBetween($line, '<insertvar>', '</insertvar>');
                 $ivar = preg_replace('/[^a-z0-9]+$/i', '', $ivar);
 
                 if (empty($ivar) || !array_key_exists($ivar, $to_replace)) {
@@ -201,20 +182,7 @@ function replacer($file, $to_replace = []) {
     return $content;
 }
 
-function get_substr_between($string, $start, $end) {
-    $ini = strpos($string, $start);
-
-    if ($ini === false) {
-        return '';
-    }
-
-    $ini += strlen($start);
-    $len = strpos($string, $end, $ini) - $ini;
-
-    return substr($string, $ini, $len);
-}
-
-function get_fclignore($file) {
+function fclignore($file) {
     $fclignore = '';
 
     if (is_file($file)) {
@@ -240,11 +208,11 @@ function get_fclignore($file) {
     return $fclignore;
 }
 
-function runfcl(string $cmd, string $file, string $opts = '') {
+function fcl(string $cmd, string $file, string $opts = '') {
     return shell_exec('fcl '.$cmd.($opts ? ' '.$opts : '').' '.$file);
 }
 
-function runhideg($file) {
+function hideg($file) {
     if (!is_file('hideg.pwd')) {
         // $f = fopen("hideg.pwd", "w") or die("Unable to open file!");
         // $n = readline('Enter name: ');
@@ -261,7 +229,52 @@ function runhideg($file) {
     return shell_exec('hideg '.$file);
 }
 
-function delete_content($path) {
+function numbered() {
+    $list = [];
+
+    if (is_dir(MDIR) && is_dir(getConcatPath(MDIR, SRCDIR))) {
+        $list[] = strtolower(basename(getcwd()));
+    } else {
+        $list[] = false;
+
+        unset($list[0]);
+    }
+
+    if (is_dir(ADIR)) {
+        $addons = getDirList(ADIR);
+
+        foreach ($addons as $name) {
+            if (is_dir(getConcatPath(getConcatPath(ADIR, $name), SRCDIR))) {
+                $list[] = getConcatPath(ADIR, $name);
+            }
+        }
+    }
+
+    return $list;
+}
+
+function output(string $text = '', bool $error = false) {
+    $text = ($error) ? 'ERROR: '.$text : $text;
+
+    echo $text."\n";
+
+    ($error) ? exit(1) : null;
+}
+
+function getSubstrBetween($string, $start, $end) {
+    $ini = strpos($string, $start);
+
+    if ($ini === false) {
+        return '';
+    }
+
+    $ini += strlen($start);
+    $len = strpos($string, $end, $ini) - $ini;
+
+    return substr($string, $ini, $len);
+}
+
+function deleteContent($path) {
     try {
         $iterator = new DirectoryIterator($path);
         foreach ($iterator as $fileinfo) {
@@ -269,7 +282,7 @@ function delete_content($path) {
                 continue;
             }
             if ($fileinfo->isDir()) {
-                if (delete_content($fileinfo->getPathname())) {
+                if (deleteContent($fileinfo->getPathname())) {
                     @rmdir($fileinfo->getPathname());
                 }
             }
@@ -283,28 +296,4 @@ function delete_content($path) {
     }
 
     return true;
-}
-
-function get_enumerated() {
-    $enumerated = [];
-
-    if (is_dir(MDIR) && is_dir(concatpath(MDIR, SRCDIR))) {
-        $enumerated[] = strtolower(basename(getcwd()));
-    } else {
-        $enumerated[] = false;
-
-        unset($enumerated[0]);
-    }
-
-    if (is_dir(ADIR)) {
-        $addons = get_dir_list(ADIR);
-
-        foreach ($addons as $name) {
-            if (is_dir(concatpath(concatpath(ADIR, $name), SRCDIR))) {
-                $enumerated[] = concatpath(ADIR, $name);
-            }
-        }
-    }
-
-    return $enumerated;
 }
