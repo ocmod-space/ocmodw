@@ -102,7 +102,7 @@ function mkzip($srcdir, $zipfile, $force = false) {
 
     if ($zip->open($zipfile, ZipArchive::CREATE) === true) {
         foreach (getFileList($srcdir) as $file) {
-            $relative = substr($file, strlen($srcdir));
+            $relative = ltrim(substr($file, strlen($srcdir)), DIRECTORY_SEPARATOR);
 
             if (is_file($file)) {
                 $content = replacer($file);
