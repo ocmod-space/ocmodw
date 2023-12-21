@@ -24,13 +24,13 @@ An example of directory structure:
 │       ├── src
 │       │   ├── 23
 │       │   │   ├── upload
-│       │   │   ├── admin
-│       │   │   └── catalog
+│       │   │   │   ├── admin
+│       │   │   │   └── catalog
 │       │   │   └── install.xml
 │       │   ├── 3x
 │       │   │   ├── upload
-│       │   │   ├── admin
-│       │   │   └── catalog
+│       │   │   │   ├── admin
+│       │   │   │   └── catalog
 │       │   │   └── install.xml
 │       │   └── 4x
 │       │       ├── admin
@@ -45,13 +45,13 @@ An example of directory structure:
 │   ├── src
 │   │   ├── 23
 │   │   │   ├── upload
-│   │   │   ├── admin
-│   │   │   └── catalog
+│   │   │   │   ├── admin
+│   │   │   │   └── catalog
 │   │   │   └── install.xml
 │   │   ├── 3x
 │   │   │   ├── upload
-│   │   │   ├── admin
-│   │   │   └── catalog
+│   │   │   │   ├── admin
+│   │   │   │   └── catalog
 │   │   │   └── install.xml
 │   │   └── 4x
 │   │       ├── admin
