@@ -21,26 +21,26 @@ An example of directory structure:
 │       reqd.php
 ├── addons
 │   └── addon1
-│       └──src
-│           ├── 23
-│           │   ├── upload
-│           │   ├── admin
-│           │   └── catalog
-│           │   └── install.xml
-│           ├── 3
-│           │   ├── upload
-│           │   ├── admin
-│           │   └── catalog
-│           │   └── install.xml
-│           ├── 4
-│           │   ├── admin
-│           │   ├── catalog
-│           │   └── ocmod
-│           │       └── addon.ocmod.xml
-│           └── zip
-│               ├── module--addon1-oc23.ocmod.zip
-│               ├── module--addon1-oc3x.ocmod.zip
-│               └── module--addon1-oc4x.ocmod.zip
+│       ├── src
+│       │   ├── 23
+│       │   │   ├── upload
+│       │   │   ├── admin
+│       │   │   └── catalog
+│       │   │   └── install.xml
+│       │   ├── 3
+│       │   │   ├── upload
+│       │   │   ├── admin
+│       │   │   └── catalog
+│       │   │   └── install.xml
+│       │   ├── 4
+│       │   │   ├── admin
+│       │   │   ├── catalog
+│       │   │   └── ocmod
+│       │   │       └── addon.ocmod.xml
+│       └── zip
+│           ├── module--addon1-oc23.ocmod.zip
+│           ├── module--addon1-oc3x.ocmod.zip
+│           └── module--addon1-oc4x.ocmod.zip
 ├── module
 │   ├── src
 │   │   ├── 23
