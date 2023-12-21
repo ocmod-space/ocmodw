@@ -32,11 +32,11 @@ An example of directory structure:
 │       │   │   ├── admin
 │       │   │   └── catalog
 │       │   │   └── install.xml
-│       │   ├── 4
-│       │   │   ├── admin
-│       │   │   ├── catalog
-│       │   │   └── ocmod
-│       │   │       └── addon.ocmod.xml
+│       │   └── 4
+│       │       ├── admin
+│       │       ├── catalog
+│       │       └── ocmod
+│       │           └── addon.ocmod.xml
 │       └── zip
 │           ├── module--addon1-oc23.ocmod.zip
 │           ├── module--addon1-oc3x.ocmod.zip
