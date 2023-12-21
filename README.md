@@ -27,12 +27,12 @@ An example of directory structure:
 │       │   │   ├── admin
 │       │   │   └── catalog
 │       │   │   └── install.xml
-│       │   ├── 3
+│       │   ├── 3x
 │       │   │   ├── upload
 │       │   │   ├── admin
 │       │   │   └── catalog
 │       │   │   └── install.xml
-│       │   └── 4
+│       │   └── 4x
 │       │       ├── admin
 │       │       ├── catalog
 │       │       └── ocmod
@@ -48,12 +48,12 @@ An example of directory structure:
 │   │   │   ├── admin
 │   │   │   └── catalog
 │   │   │   └── install.xml
-│   │   ├── 3
+│   │   ├── 3x
 │   │   │   ├── upload
 │   │   │   ├── admin
 │   │   │   └── catalog
 │   │   │   └── install.xml
-│   │   └── 4
+│   │   └── 4x
 │   │       ├── admin
 │   │       ├── catalog
 │   │       └── ocmod
