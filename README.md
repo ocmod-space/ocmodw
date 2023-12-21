@@ -7,6 +7,7 @@ Able to replace text in source files, which is convenient when adding identical 
 The constants defined in the `_ocxpak.php` file are used for replacement. All it needs for replacement is to define a constant and insert it in the right place of the source file using the `<insertvar>` tag (for example, `<insertvar>CONST</insertvar>`, this construction will be replaced with the value of `CONST` defined in the file `_ocxpak.php`). If it needs to insert content of a whole file use the `<insertfile>` tag(for example, `<insertfile>_inc/info.txt</insertfile>` ). The `<insertvar>` tag also works inside such files - first all the variables will be substituted in a file and then its contains will be inserted in the appropriate place.
 
 An example of directory structure:
+```
 .
 ├── _fcl
 │   └── module.fcl.g
@@ -64,7 +65,7 @@ An example of directory structure:
 ├── .fclignore
 ├── _ocxpak.def.php
 └── _ocxpak.php
-
+```
 
 `_fcl`- A storage of `fcl`-file - a custom archive that contains all the necessary project files and has a git-friendly structure. Using to encrypt and store project files using git. It requires 3rd party tools and is not yet publicly available (maybe later).  
 `_inc` - A directory to store placeholder files are used with the `<insertfile>` tag.  
