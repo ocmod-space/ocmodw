@@ -57,7 +57,7 @@ An example of directory structure:
 │       ├── module-oc23.ocmod.zip
 │       ├── module-oc3x.ocmod.zip
 │       └── module-oc4x.ocmod.zip
-├── ocmodw
+├── ocmodw.inc
 │       ocmodw.fun.php
 │       ocmodw.hlp.php
 │       ocmodw.opt.php
