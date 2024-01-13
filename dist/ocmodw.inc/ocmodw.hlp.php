@@ -1,7 +1,9 @@
 <?php
 
-output('OCXPak - OpenCart eXtension Packer.');
-output('Using: php _ocxpak.php [-option]');
+declare(strict_types=1);
+
+output('OpenCart MODule Wrapper.');
+output('Using: php ocmodw.php [-option]');
 output();
 output('Options:');
 output(' -z[0|1|2..N]' . "\t" . 'Zip extension or addon number [N] (see below).');

@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 // internal functions
 
 function get_clo() {
     $o = '';
 
     $o .= MAKEZIP . '::';
-    $o .= OCVERS . '::';
-    $o .= DIRPATH . '::';
+    $o .= VSUFFIX . '::';
     $o .= GETHELP;
     $o .= MAKEFCL;
     $o .= EXTRFCL;
-    $o .= LISTFCL;
+    $o .= LISTFCL ;
 
     $options = getopt($o);
     $clo = [];
@@ -21,7 +22,7 @@ function get_clo() {
             ? ($options[MAKEZIP] == (int)$options[MAKEZIP] ? (int)$options[MAKEZIP] : false)
             : false;
 
-        $clo[OCVERS] = $options[OCVERS] ?? '3x';
+        $clo[VSUFFIX] = !empty($options[VSUFFIX]) ? $options[VSUFFIX] : '';
     } elseif (isset($options[GETHELP])) {
         $clo[GETHELP] = 1;
     } elseif (isset($options[MAKEFCL])) {
@@ -40,7 +41,7 @@ function getConcatPath() {
     $path = '';
 
     foreach (func_get_args() as $dir) {
-        $path .= trim($dir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        if ($dir) $path .= trim($dir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
     return trim($path, DIRECTORY_SEPARATOR);
@@ -98,7 +99,7 @@ function chkdir(string $dir) {
     return mkdir($dir);
 }
 
-function mkzip($srcdir, $zipfile, $force = false) {
+function mkzip($srcdir, $zipfile, $force = false): void {
     if (is_file($zipfile) && !$force) {
         output($zipfile . ' already exists! Use force flag', true);
     }
@@ -133,7 +134,7 @@ function mkzip($srcdir, $zipfile, $force = false) {
             for ($i = 0; $i < $zip->numFiles; ++$i) {
                 $stat = $zip->statIndex($i);
 
-                $zip->setMtimeIndex($i, strtotime('2023-01-01 00:00:01'));
+                $zip->setMtimeIndex($i, strtotime('2024-01-01 00:00:01'));
             }
 
             $zip->close();
@@ -153,8 +154,9 @@ function replacer($file, $to_replace = []) {
     if ($pointer = fopen($file, 'r')) {
         while (!feof($pointer)) {
             $line = fgets($pointer);
+            if (!$line) break;
 
-            if (strpos($line, '<insertfile>') !== false) {
+            if ($line && strpos($line, '<insertfile>') !== false) {
                 $ifile = getSubstrBetween($line, '<insertfile>', '</insertfile>');
 
                 if (empty($ifile) || !is_file($ifile)) {
@@ -258,7 +260,7 @@ function numbered() {
     return $list;
 }
 
-function output(string $text = '', bool $error = false) {
+function output(string $text = '', bool $error = false): void {
     $text = ($error) ? 'ERROR: ' . $text : $text;
 
     echo $text . "\n";

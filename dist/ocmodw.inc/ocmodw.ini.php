@@ -1,18 +1,9 @@
 <?php
 
-// internal constants
-
-define('FCLDIR', '_fcl');
-define('FCLIGNORE', '.fclignore'); // ignorelist for fcl
-define('SRCDIR', 'src');
-define('ZIPDIR', 'zip');
-define('ZIPEXT', '.ocmod.zip');
-
-define('MDIR', 'module'); // dir with module
-define('ADIR', 'addons'); // dir with addons
+declare(strict_types=1);
 
 define('MAKEZIP', 'z'); // -z[0|1|2..N] - create zip. N - number of module(0) or addons(1..).
-define('OCVERS', 'v');  // -v[3|4] - print help.
+define('VSUFFIX', 'v');  // -v[3|4] - print help.
 define('GETHELP', 'h'); // -h - print help.
 define('MAKEFCL', 'a'); // -a - make encrypted .fcl-archive.
 define('EXTRFCL', 'x'); // -x - extract files from fcl-archive.
