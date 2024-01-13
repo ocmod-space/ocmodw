@@ -154,6 +154,7 @@ function replacer($file, $to_replace = []) {
     if ($pointer = fopen($file, 'r')) {
         while (!feof($pointer)) {
             $line = fgets($pointer);
+
             if (!$line) break;
 
             if ($line && strpos($line, '<insertfile>') !== false) {
@@ -196,6 +197,9 @@ function fclignore($file) {
         if ($pointer = fopen($file, 'r')) {
             while (!feof($pointer)) {
                 $line = fgets($pointer);
+
+                if (!$line) break;
+
                 $line = trim($line);
                 $line = rtrim($line, DIRECTORY_SEPARATOR);
 
