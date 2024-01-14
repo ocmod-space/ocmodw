@@ -8,7 +8,7 @@ function get_clo() {
     $o = '';
 
     $o .= MAKEZIP . '::';
-    $o .= VSUFFIX . '::';
+    $o .= WORKDIR . '::';
     $o .= GETHELP;
     $o .= MAKEFCL;
     $o .= EXTRFCL;
@@ -22,7 +22,7 @@ function get_clo() {
             ? ($options[MAKEZIP] == (int)$options[MAKEZIP] ? (int)$options[MAKEZIP] : false)
             : false;
 
-        $clo[VSUFFIX] = !empty($options[VSUFFIX]) ? $options[VSUFFIX] : '';
+        $clo[WORKDIR] = !empty($options[WORKDIR]) ? $options[WORKDIR] : '';
     } elseif (isset($options[GETHELP])) {
         $clo[GETHELP] = 1;
     } elseif (isset($options[MAKEFCL])) {
@@ -154,7 +154,6 @@ function replacer($file, $to_replace = []) {
     if ($pointer = fopen($file, 'r')) {
         while (!feof($pointer)) {
             $line = fgets($pointer);
-
             if (!$line) break;
 
             if ($line && strpos($line, '<insertfile>') !== false) {

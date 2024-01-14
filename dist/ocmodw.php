@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 require_once 'ocmodw.ini.php';
-require_once 'ocmodw.inc/ocmodw.ini.php';
 require_once 'ocmodw.inc/ocmodw.fun.php';
 require_once 'ocmodw.inc/ocmodw.req.php';
+require_once 'ocmodw.inc/ocmodw.opt.php';
 
 /*
 set_error_handler(function ($errno, $errstr, $errfile, $errline) {
@@ -23,8 +23,8 @@ $basename = strtolower(basename(getcwd()));
 if (isset($clo[MAKEZIP]) && $clo[MAKEZIP] !== false) {
     $workdir = getWd($clo[MAKEZIP]);
     if ($workdir) {
-        $vsuffix = $clo[VSUFFIX] ?: '3x';
-        $srcdir = getConcatPath($workdir, SRCDIR, $vsuffix);
+        $subdir = $clo[WORKDIR] ?: '';
+        $srcdir = getConcatPath($workdir, SRCDIR, $subdir);
 
         if (!is_dir($srcdir)) {
             output('There is no such directory "' . $srcdir . '"', true);
@@ -41,7 +41,7 @@ if (isset($clo[MAKEZIP]) && $clo[MAKEZIP] !== false) {
 
         define('MODFILE', $basename);
 
-        $zipfile = getConcatPath($zipdir, MODFILE . ($vsuffix ? '-oc' . $vsuffix : '') . ZIPEXT);
+        $zipfile = getConcatPath($zipdir, MODFILE . ($subdir ? '-oc' . $subdir : '') . ZIPEXT);
 
         $mod_code = str_replace('--', '|', $basename);
 

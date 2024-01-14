@@ -6,7 +6,7 @@ A custom OpenCart dev-tool which designed to build ready-to-use OC extensions an
 Able to replace text in source files, which is convenient when adding identical words and texts, such as the name of a module, version or an infoblock at the beginning of a file.
 The constants defined in the `ocmodw.ini.php` file are used for replacement. All it needs for replacement is to define a constant and insert it in the right place of the source file using the `<insertvar>` tag (for example, `<insertvar>CONST</insertvar>`, this construction will be replaced with the value of `CONST` defined in the file `ocmodw.php`). If it needs to insert content of a whole file use the `<insertfile>` tag(for example, `<insertfile>_inc/info.txt</insertfile>` ). The `<insertvar>` tag also works inside such files - first all the variables will be substituted in a file and then its contains will be inserted in the appropriate place.
 
-An example of directory structure:
+Directory structure example:
 ```
 .
 ├── _fcl
@@ -73,3 +73,7 @@ An example of directory structure:
 `zip` - A directory where the compiled extension `zip`-file is created.  
 `.fclignore` - A list of files to be ignored by the `fcl`-utility. It is not yet publicly available.  
 `ocmodw.ini.php` - A file with defined constants to use them with the `<insertvar>` tag.
+
+## Usage example
+`$ php ocmodw.php -z0 -v3x` > `module-oc3x.ocmod.zip`
+`$ php ocmodw.php -z1 -v23` > `module--addon1-oc23.ocmod.zip`
