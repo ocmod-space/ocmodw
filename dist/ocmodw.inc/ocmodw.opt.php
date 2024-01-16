@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 define('MAKEZIP', 'z'); // -z[0|1|2..N] - create zip. N - number of module(0) or addons(1..).
 define('WORKDIR', 'd'); // -d[subdir] - use subdir inside the source directory.
 define('GETHELP', 'h'); // -h - print help.

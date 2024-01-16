@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 require_once 'ocmodw.ini.php';
 require_once 'ocmodw.inc/ocmodw.fun.php';
 require_once 'ocmodw.inc/ocmodw.req.php';

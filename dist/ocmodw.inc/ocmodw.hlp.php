@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 output('OpenCart MODule Wrapper.');
 output('Using: php ocmodw.php [-option]');
 output();

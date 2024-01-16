@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 // check required tools and php modules
 
 if (!extension_loaded('zip')) {

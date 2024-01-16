@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 // internal functions
 
 function get_clo() {
@@ -12,7 +10,7 @@ function get_clo() {
     $o .= GETHELP;
     $o .= MAKEFCL;
     $o .= EXTRFCL;
-    $o .= LISTFCL ;
+    $o .= LISTFCL;
 
     $options = getopt($o);
     $clo = [];
